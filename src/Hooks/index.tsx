@@ -62,6 +62,7 @@ export interface UseSpeechToTextTypes {
   timeout?: number;
   useLegacyResults?: boolean;
   useOnlyGoogleCloud?: boolean;
+  threshold?: number;
 }
 
 export default function useSpeechToText({
@@ -74,7 +75,8 @@ export default function useSpeechToText({
   speechRecognitionProperties = { interimResults: true },
   timeout = 10000,
   useOnlyGoogleCloud = false,
-  useLegacyResults = true
+  useLegacyResults = true,
+  threshold = 0.8
 }: UseSpeechToTextTypes) {
   const [isRecording, setIsRecording] = useState(false);
 
@@ -325,6 +327,8 @@ export default function useSpeechToText({
           timestamp: Math.floor(Date.now() / 1000),
           confidence: alternative.confidence
         }));
+
+        res.filter((result: any) => result.confidence >= threshold);
 
         setResults(res);
       }

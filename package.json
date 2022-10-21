@@ -1,6 +1,6 @@
 {
   "name": "react-hook-stt-fork",
-  "version": "0.8.4",
+  "version": "0.8.6",
   "private": false,
   "main": "dist/index.js",
   "license": "MIT",

@@ -23,8 +23,9 @@ export interface UseSpeechToTextTypes {
     timeout?: number;
     useLegacyResults?: boolean;
     useOnlyGoogleCloud?: boolean;
+    threshold?: number;
 }
-export default function useSpeechToText({ continuous, crossBrowser, googleApiKey, googleCloudRecognitionConfig, onStartSpeaking, onStoppedSpeaking, speechRecognitionProperties, timeout, useOnlyGoogleCloud, useLegacyResults }: UseSpeechToTextTypes): {
+export default function useSpeechToText({ continuous, crossBrowser, googleApiKey, googleCloudRecognitionConfig, onStartSpeaking, onStoppedSpeaking, speechRecognitionProperties, timeout, useOnlyGoogleCloud, useLegacyResults, threshold }: UseSpeechToTextTypes): {
     error: string;
     interimResult: string | undefined;
     isRecording: boolean;
