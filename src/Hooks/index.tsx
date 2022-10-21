@@ -257,6 +257,7 @@ export default function useSpeechToText({
   const stopSpeechToTextNoData = () => {
       setIsRecording(false);
       stopMediaStream();
+      stopRecording({ exportWAV: false });
   };
 
   const handleRecordingTimeout = () => {
