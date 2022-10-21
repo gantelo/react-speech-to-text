@@ -1,11 +1,11 @@
 {
-  "name": "react-hook-speech-to-text",
-  "version": "0.8.0",
+  "name": "react-hook-stt-fork",
+  "version": "0.8.1",
   "private": false,
   "main": "dist/index.js",
   "license": "MIT",
-  "author": "Riley Brown",
-  "repository": "Riley-Brown/react-speech-to-text",
+  "author": "Gabriel Antelo",
+  "repository": "gantelo/react-speech-to-text",
   "description": "Simple cross-browser speech to text using react hooks.",
   "dependencies": {},
   "peerDependencies": {
