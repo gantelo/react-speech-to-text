@@ -10,6 +10,7 @@ export declare type ResultType = {
     speechBlob?: Blob;
     timestamp: number;
     transcript: string;
+    confidence: number;
 };
 export interface UseSpeechToTextTypes {
     continuous?: boolean;

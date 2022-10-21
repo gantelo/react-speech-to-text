@@ -33,6 +33,7 @@ export type ResultType = {
   speechBlob?: Blob;
   timestamp: number;
   transcript: string;
+  confidence: number;
 };
 
 // Set recognition back to null for brave browser due to promise resolving
@@ -136,7 +137,7 @@ export default function useSpeechToText({
       // speech successfully translated into text
       recognition.onresult = (e) => {
         const result = e.results[e.results.length - 1];
-        const { transcript } = result[0];
+        const { transcript, confidence } = result[0];
 
         const timestamp = Math.floor(Date.now() / 1000);
 
@@ -146,7 +147,7 @@ export default function useSpeechToText({
             setInterimResult(undefined);
             setResults((prevResults) => [
               ...prevResults,
-              { transcript, timestamp }
+              { transcript, timestamp, confidence }
             ]);
             setLegacyResults((prevResults) => [...prevResults, transcript]);
           } else {
@@ -162,7 +163,7 @@ export default function useSpeechToText({
         } else {
           setResults((prevResults) => [
             ...prevResults,
-            { transcript, timestamp }
+            { transcript, timestamp, confidence }
           ]);
           setLegacyResults((prevResults) => [...prevResults, transcript]);
         }
