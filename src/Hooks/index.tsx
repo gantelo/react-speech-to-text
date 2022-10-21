@@ -254,6 +254,11 @@ export default function useSpeechToText({
     }
   };
 
+  const stopSpeechToTextNoData = () => {
+      setIsRecording(false);
+      stopMediaStream();
+  };
+
   const handleRecordingTimeout = () => {
     timeoutId.current = window.setTimeout(() => {
       setIsRecording(false);
@@ -341,6 +346,7 @@ export default function useSpeechToText({
     results: useLegacyResults ? legacyResults : results,
     setResults,
     startSpeechToText,
-    stopSpeechToText
+    stopSpeechToText,
+    stopSpeechToTextNoData
   };
 }

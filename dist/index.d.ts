@@ -31,4 +31,5 @@ export default function useSpeechToText({ continuous, crossBrowser, googleApiKey
     setResults: import("react").Dispatch<import("react").SetStateAction<ResultType[]>>;
     startSpeechToText: () => Promise<void>;
     stopSpeechToText: () => void;
+    stopSpeechToTextNoData: () => void;
 };
