@@ -318,10 +318,11 @@ export default function useSpeechToText({
 
       // Update results state with transcribed text
       if (googleCloudJson.results?.length > 0) {
-        const res = googleCloudJson.results[0].alternatives.map((alternative: { transcript: any; }) => ({
+        const res = googleCloudJson.results[0].alternatives.map((alternative: any) => ({
           speechBlob: blob,
           transcript: alternative.transcript,
-          timestamp: Math.floor(Date.now() / 1000)
+          timestamp: Math.floor(Date.now() / 1000),
+          confidence: alternative.confidence
         }));
 
         setResults(res);
