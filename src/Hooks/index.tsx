@@ -310,7 +310,7 @@ export default function useSpeechToText({
       audio.content = base64data.substr(base64data.indexOf(',') + 1);
 
       const googleCloudRes = await fetch(
-        `https://speech.googleapis.com/v1/speech:recognize?key=${googleApiKey}`,
+        `https://speech.googleapis.com/v1p1beta1/speech:recognize?key=${googleApiKey}`,
         {
           method: 'POST',
           body: JSON.stringify(data)
