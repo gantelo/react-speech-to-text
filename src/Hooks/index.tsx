@@ -53,6 +53,7 @@ if (!isEdgeChromium && SpeechRecognition) {
 
 export interface UseSpeechToTextTypes {
   continuous?: boolean;
+  fullAudio?: boolean;
   crossBrowser?: boolean;
   googleApiKey?: string;
   googleCloudRecognitionConfig?: GoogleCloudRecognitionConfig;
@@ -67,6 +68,7 @@ export interface UseSpeechToTextTypes {
 
 export default function useSpeechToText({
   continuous,
+  fullAudio,
   crossBrowser,
   googleApiKey,
   googleCloudRecognitionConfig,
@@ -230,6 +232,7 @@ export default function useSpeechToText({
     });
 
     speechEvents.on('stopped_speaking', () => {
+      if (fullAudio) return;
       if (onStoppedSpeaking) onStoppedSpeaking();
 
       // Stops current recording and sends audio string to google cloud.
@@ -321,16 +324,36 @@ export default function useSpeechToText({
 
       // Update results state with transcribed text
       if (googleCloudJson.results?.length > 0) {
-        const res = googleCloudJson.results[0].alternatives.map((alternative: any) => ({
+
+        if (fullAudio) {
+          const results = (googleCloudJson.results as GoogleResults[]).reduce((prev: Alternative[], curr: GoogleResults) => {
+              if (curr.alternatives?.length > 0) {
+                const highestConfidenceAlternative = curr.alternatives.sort((a,b) => b.confidence - a.confidence)[0];
+                return prev.concat(highestConfidenceAlternative);
+              }
+              return prev;
+          }, []).reduce((prev, curr) => prev + curr.transcript, '');
+
+        const res = {
           speechBlob: blob,
-          transcript: alternative.transcript,
+          transcript: results.toLocaleLowerCase(),
           timestamp: Math.floor(Date.now() / 1000),
-          confidence: alternative.confidence
-        }));
+          confidence: 1
+        };
+        setResults([res]);
 
-        res.filter((result: any) => result.confidence >= threshold);
+        } else {
+          const res = googleCloudJson.results[0].alternatives.map((alternative: any) => ({
+            speechBlob: blob,
+            transcript: alternative.transcript,
+            timestamp: Math.floor(Date.now() / 1000),
+            confidence: alternative.confidence
+          }));
 
-        setResults(res);
+          res.filter((result: any) => result.confidence >= threshold);
+
+          setResults(res);
+        }
       }
 
       if (continuous) {
@@ -356,4 +379,15 @@ export default function useSpeechToText({
     stopSpeechToText,
     stopSpeechToTextNoData
   };
+}
+
+type Alternative = {
+    transcript: string,
+    confidence: number
+}
+
+type GoogleResults = {
+  alternatives: Alternative[],
+  resultEndTime: string,
+  languageCode: string
 }

@@ -14,6 +14,7 @@ export declare type ResultType = {
 };
 export interface UseSpeechToTextTypes {
     continuous?: boolean;
+    fullAudio?: boolean;
     crossBrowser?: boolean;
     googleApiKey?: string;
     googleCloudRecognitionConfig?: GoogleCloudRecognitionConfig;
@@ -25,7 +26,7 @@ export interface UseSpeechToTextTypes {
     useOnlyGoogleCloud?: boolean;
     threshold?: number;
 }
-export default function useSpeechToText({ continuous, crossBrowser, googleApiKey, googleCloudRecognitionConfig, onStartSpeaking, onStoppedSpeaking, speechRecognitionProperties, timeout, useOnlyGoogleCloud, useLegacyResults, threshold }: UseSpeechToTextTypes): {
+export default function useSpeechToText({ continuous, fullAudio, crossBrowser, googleApiKey, googleCloudRecognitionConfig, onStartSpeaking, onStoppedSpeaking, speechRecognitionProperties, timeout, useOnlyGoogleCloud, useLegacyResults, threshold }: UseSpeechToTextTypes): {
     error: string;
     interimResult: string | undefined;
     isRecording: boolean;
