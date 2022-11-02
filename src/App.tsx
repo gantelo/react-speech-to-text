@@ -13,9 +13,11 @@ export default function App() {
     isRecording,
     results,
     startSpeechToText,
-    stopSpeechToText
+    stopSpeechToText,
+    recordingVolume
   } = useSpeechToText({
     continuous: true,
+    fullAudio: true,
     crossBrowser: true,
     googleApiKey: process.env.REACT_APP_API_KEY,
     speechRecognitionProperties: { interimResults: true },
@@ -48,6 +50,7 @@ export default function App() {
       }}
     >
       <h1>Recording: {isRecording.toString()}</h1>
+      {recordingVolume}
       <button onClick={isRecording ? stopSpeechToText : startSpeechToText}>
         <span>{isRecording ? 'Stop Recording' : 'Start Recording'}</span>
         <img data-recording={isRecording} src={micIcon} alt="" />

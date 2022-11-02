@@ -2,13 +2,15 @@
  *
  * @param {{
  * audioContext: AudioContext
+ * setVol: Function
  * errHandler?: () => void
  * onStreamLoad?: () => void
  * }}
  * @returns {Promise<MediaStream>}
  */
-export function startRecording({ audioContext, errHandler, onStreamLoad, }: {
+export function startRecording({ audioContext, setVol, errHandler, onStreamLoad, }: {
     audioContext: AudioContext;
+    setVol: Function;
     errHandler?: () => void;
     onStreamLoad?: () => void;
 }): Promise<MediaStream>;

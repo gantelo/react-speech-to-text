@@ -91,6 +91,7 @@ export default function useSpeechToText({
   const [error, setError] = useState('');
 
   const timeoutId = useRef<number>();
+  const [vol, setVol] = useState<number>();
   const mediaStream = useRef<MediaStream>();
 
   useEffect(() => {
@@ -200,6 +201,7 @@ export default function useSpeechToText({
     }
 
     const stream = await startRecording({
+      setVol: setVol,
       errHandler: () => setError('Microphone permission was denied'),
       audioContext: audioContextRef.current as AudioContext
     });
@@ -374,6 +376,7 @@ export default function useSpeechToText({
     interimResult,
     isRecording,
     results: useLegacyResults ? legacyResults : results,
+    recordingVolume: vol,
     setResults,
     startSpeechToText,
     stopSpeechToText,
