@@ -34,6 +34,6 @@ export default function useSpeechToText({ continuous, fullAudio, crossBrowser, g
     recordingVolume: number | undefined;
     setResults: import("react").Dispatch<import("react").SetStateAction<ResultType[]>>;
     startSpeechToText: () => Promise<void>;
-    stopSpeechToText: () => void;
+    stopSpeechToText: (reset?: boolean | undefined) => void;
     stopSpeechToTextNoData: () => void;
 };

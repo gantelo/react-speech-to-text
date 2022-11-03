@@ -249,7 +249,7 @@ export default function useSpeechToText({
     });
   };
 
-  const stopSpeechToText = () => {
+  const stopSpeechToText = (reset?: boolean) => {
     if (recognition && !useOnlyGoogleCloud) {
       recognition.stop();
     } else {
@@ -257,7 +257,7 @@ export default function useSpeechToText({
       stopMediaStream();
       stopRecording({
         exportWAV: true,
-        wavCallback: (blob) => handleBlobToBase64({ blob, continuous: false })
+        wavCallback: (blob) => handleBlobToBase64({ blob, continuous: false, reset })
       });
     }
   };
@@ -278,10 +278,12 @@ export default function useSpeechToText({
 
   const handleBlobToBase64 = ({
     blob,
-    continuous
+    continuous,
+    reset = false
   }: {
     blob: Blob;
     continuous: boolean;
+    reset?: boolean;
   }) => {
     const reader = new FileReader();
     reader.readAsDataURL(blob);
@@ -313,6 +315,10 @@ export default function useSpeechToText({
 
       // Gets raw base 64 string data
       audio.content = base64data.substr(base64data.indexOf(',') + 1);
+
+      if (reset) {
+        startSpeechToText();
+      }
 
       const googleCloudRes = await fetch(
         `https://speech.googleapis.com/v1p1beta1/speech:recognize?key=${googleApiKey}`,
@@ -358,7 +364,7 @@ export default function useSpeechToText({
         }
       }
 
-      if (continuous) {
+      if (continuous && !reset && !fullAudio) {
         startSpeechToText();
       } else {
         stopMediaStream();
